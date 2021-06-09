@@ -1,0 +1,15 @@
+{
+  "name": "test_cd",
+  "version": "1.0.0",
+  "description": "test to create a cd deploy using github workflow",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Pedro Eusébio",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
