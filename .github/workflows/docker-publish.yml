@@ -1,0 +1,39 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: Node.js Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: deploy to staging
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js ${{matrix.node-version}}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Login to Docker Hub
+        run: docker login --username "${{ secrets.DOCKER_USERNAME }}" -- password "${{ secrets.DOCKER_PASSWORD }}"
+
+      - name: Build the Docker Image
+        run: docker build . --file Dockerfile -- tag pedroseusebio/test_cd
+
+      - name: Push the Docker Image
+        run: docker push pedroseusebio/test_cd
+
+        env:
+          CI: true
