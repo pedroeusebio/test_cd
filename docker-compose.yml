@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nodejs
+    container_name: test_cd
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5000:8000"
+    volumes:
+      - .:/usr/src/app
+      - ./node_modules:/usr/src/app/node_modules
